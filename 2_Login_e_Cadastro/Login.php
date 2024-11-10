@@ -1,17 +1,19 @@
 <?php
+if(isset($_POST['Login'])) {
+
  // inicinado uma sessão
     session_start();
 
-    /* Recebendo os dados de login e senha
+    /* Recebendo os dados de email e senha
        digitados pelo user na pagina de login */ 
-    $login = $_POST['login'];
+    $email = $_POST['email'];
     $senha = $_POST['senha'];
 
     include "conexao.php";
 
     /*  A variavel $Comando pega as variaveis $login e $senha, 
         faz uma pesquisa na tablea TB_CLIENTE */
-    $Comando->bindParam(1, $login);
+    $Comando->bindParam(1, $email);
     $Comando->bindParam(2, $senha);
     # bindParam: vincula um parâmetro a uma variável em uma instrução SQL preparada
 
@@ -26,17 +28,17 @@
        que se possa tentar novamente realizar o login. */
 
     if ($Comando->rowCount() > 0) {
-        $_SESSION['login'] = $login;
+        $_SESSION['email'] = $email;
         $_SESSION['senha'] = $senha;
 
         header('location:pagamento.php'); # coloque a localização correta
         exit();
     }
     else {
-        unset ($_SESSION['login']);
+        unset ($_SESSION['email']);
         unset ($_SESSION['senha']);
 
-        echo "<script> alert('Usuário e/ou senha incorretos!') </script>";
+        echo "<script> alert('Email e/ou Senha incorretos!') </script>";
         header('location:Login.php');
         exit();
     }
@@ -46,4 +48,9 @@
         unset: usada para destruir variáveis, elementos de arrays ou objetos (limpar dados)
         exit: usada para finalizar imediatamente a execução de um script
     */
+}
+else {
+    echo "<script> alert('erro') </script>";
+    header('location:Login.php');
+}
 ?>
