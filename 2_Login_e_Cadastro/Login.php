@@ -50,7 +50,6 @@ if(isset($_POST['Login'])) {
     */
 }
 else {
-    echo "<script> alert('erro') </script>";
     header('location:Login.php');
 }
 ?>
