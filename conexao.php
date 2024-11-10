@@ -1,6 +1,6 @@
 <?php
 
-$Bco =''; // Nome do banco de dados
+$Bco ='Loja'; // Nome do banco de dados
 $Usuario  ='root';
 $Senha = '';
 
