@@ -1,12 +1,4 @@
 <?php
-$Botao =$_GET["incluir"];
-$Nome = $_GET["nome_usuario"];
-$Endereco = $_GET["endereco_usuario"];
-$Email = $_GET["email_usuario"];
-$Senha = $_GET["senha_usuario"];
-$senhaConfirma = $_GET["confi_senha"];
-
-
 class Usuario 
 {
     //Cria uma classe Publica, onde todos os arquivis do projeto tema cesso
@@ -65,21 +57,10 @@ class Usuario
                 //Entrar no sistema (Sessão)
                 $dado = $Comando->fetch(); //fetch pega o que vem do bd e transforma em vetor
                 session_start();
-                $_SESSION['user'] = $dado['user'];
-                return true; //logado com sucesso
+                $_SESSION['user_id'] = $dado['ID_CLIENTE'];
+                $_SESSION['user_email'] = $this->Email;
 
-                /* na pagina que vai abrir apos digitar o login esse será o codigo
-
-                <?php
-                    session_start();
-
-                    if(!isset($_SESSION['user']))
-                    {
-                        header("location: index.php");
-                        exit;
-                    }
-                ?>
-                */ 
+                return true; 
             }
             else
             {

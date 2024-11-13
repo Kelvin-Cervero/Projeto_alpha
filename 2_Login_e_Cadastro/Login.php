@@ -1,55 +1,33 @@
 <?php
-if(isset($_POST['Login'])) {
+// Inicia a sessão para usar variáveis de sessão
+session_start();
 
- // inicinado uma sessão
-    session_start();
+// Incluindo a classe Usuario
+require_once 'Usuario.php';
 
-    /* Recebendo os dados de email e senha
-       digitados pelo user na pagina de login */ 
-    $email = $_POST['email'];
-    $senha = $_POST['senha'];
+try {
+    // Verifica se o formulário foi enviado
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $Email = $_POST["log_email_usuario"];
+        $Senha = $_POST["log_senha_usuario"];
 
-    include "conexao.php";
+        // Instanciando o objeto Usuario
+        $user = new Usuario("", "", $Email, $Senha);  // Apenas email e senha são passados
 
-    /*  A variavel $Comando pega as variaveis $login e $senha, 
-        faz uma pesquisa na tablea TB_CLIENTE */
-    $Comando->bindParam(1, $email);
-    $Comando->bindParam(2, $senha);
-    # bindParam: vincula um parâmetro a uma variável em uma instrução SQL preparada
-
-    // Executa a consulta no Banco de Dados;
-    $Comando->execute();
-
-    /* Logo abaixo existe um bloco com if e else, verificando se a variável 
-       $Comando foi bem sucessida, ou seja se ela encontrar algum registro 
-       idêntico o seu valor será igual a 1, se não tiver registros seu valor 
-       será igual a 0. Dependendo do resultado ele redicionará para a página 
-       pagamento.php ou retornara para a página do formulário inicial para 
-       que se possa tentar novamente realizar o login. */
-
-    if ($Comando->rowCount() > 0) {
-        $_SESSION['email'] = $email;
-        $_SESSION['senha'] = $senha;
-
-        header('location:pagamento.php'); # coloque a localização correta
-        exit();
+        // Tenta realizar o login
+        if ($user->logar()) {
+            // Se o login for bem-sucedido, redireciona para a página interna
+            echo "Login bem-sucedido!";
+            header("Location: alpha/3_Pagto_Pedido_e_GerPedido/teste.php");
+            exit;
+        } else {
+            // Caso o login falhe, exibe uma mensagem de erro
+            echo "Email ou senha incorretos!";
+            echo "<a href=\"login_form.php\">Voltar</a>";
+        }
     }
-    else {
-        unset ($_SESSION['email']);
-        unset ($_SESSION['senha']);
-
-        echo "<script> alert('Email e/ou Senha incorretos!') </script>";
-        header('location:Login.php');
-        exit();
-    }
-
-    /*
-        header: função que envia um cabeçalho HTTP para o navegador
-        unset: usada para destruir variáveis, elementos de arrays ou objetos (limpar dados)
-        exit: usada para finalizar imediatamente a execução de um script
-    */
 }
-else {
-    header('location:Login.php');
+catch (Exception $erro) {
+    echo "<script> alert('Erro: " . $erro->getMessage() . "');</script>";
 }
 ?>
