@@ -31,7 +31,7 @@ if (isset($_POST['incluir'])) {
                     Cadastrado com sucesso! Acesse para entrar!
                     </div>
                     <?php
-                    header('location:Login.html');
+                    // header('location:Login.html');
                 } 
                 else {
                     ?>
