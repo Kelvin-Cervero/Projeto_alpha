@@ -1,13 +1,11 @@
 <?php
-// pagina_interna.php
-
 // Inicia a sessão
 session_start();
 
 // Verifica se o usuário está logado
 if (!isset($_SESSION['user_id'])) {
     // Se não estiver logado, redireciona para o login
-    header("Location: login_form.php");
+    header("Location: Login.php");
     exit;
 }
 
