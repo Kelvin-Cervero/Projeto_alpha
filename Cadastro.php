@@ -1,34 +1,34 @@
 <?php
 // Incluindo a classe Usuario
-include 'Usuario.php';  // Incluindo o arquivo onde a classe está definida
+include 'Classes\Usuario.php';  // Incluindo o arquivo onde a classe está definida
 $user = new Usuario;
 
 
 // Verifica se o formulario foi enviado
 if (isset($_POST['incluir'])) {
 
-            $Nome = $_POST['nome_usuario'];
-            $Endereco = $_POST['endereco_usuario'];
-            $Email = $_POST['email_usuario'];
-            $Senha = trim($_POST['senha_usuario']);
+            $NomeCadastro = $_POST['nome_usuario'];
+            $EnderecoCadastro = $_POST['endereco_usuario'];
+            $EmailCadastro = $_POST['email_usuario'];
+            $SenhaCadastro = trim($_POST['senha_usuario']);
             $senhaConfirma = trim($_POST['confi_senha']);
 
 
             // var_dump($Senha, $senhaConfirma);
             
     // Verifica se todos os dados foram preenchidos
-    if (!empty($Nome) && !empty($Endereco) && !empty($Email)
-        && !empty($Senha) && !empty($senhaConfirma))  {
+    if (!empty($NomeCadastro) && !empty($EnderecoCadastro) && !empty($EmailCadastro)
+        && !empty($SenhaCadastro) && !empty($senhaConfirma))  {
 
-        try{
+        include "conexao.php";
+        if($user->msgErro == ""){
 
-            include "conexao.php";
-
-            if ($Senha == $senhaConfirma) {
-                if ($user->cadastrar($Nome, $Endereco, $Email, $Senha)) {
+            // Verifica se senha e confirmar senha são identicos
+            if ($SenhaCadastro == $senhaConfirma) {
+                if ($user->cadastrar($NomeCadastro, $EnderecoCadastro, $EmailCadastro, $SenhaCadastro)) {
                     ?>
                     <div class="msg-sucesso">
-                    Cadastrado com sucesso! Acesse para entrar!
+                    Cadastrado com sucesso!
                     </div>
                     <?php
                     // header('location:Login.html');
@@ -49,7 +49,7 @@ if (isset($_POST['incluir'])) {
                 <?php
             }
         }
-        catch (Exception $erro) {
+        else {
             ?>
             <div class="msg-erro">
                 <?php echo "Erro: ".$user->msgErro;?>
