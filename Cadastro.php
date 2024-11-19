@@ -1,6 +1,6 @@
 <?php
 // Incluindo a classe Usuario
-include 'Classes\Usuario.php';  // Incluindo o arquivo onde a classe está definida
+include 'Usuario.php';  // Incluindo o arquivo onde a classe está definida
 $user = new Usuario;
 
 
@@ -27,11 +27,14 @@ if (isset($_POST['incluir'])) {
             if ($SenhaCadastro == $senhaConfirma) {
                 if ($user->cadastrar($NomeCadastro, $EnderecoCadastro, $EmailCadastro, $SenhaCadastro)) {
                     ?>
-                    <div class="msg-sucesso">
-                    Cadastrado com sucesso!
-                    </div>
+                    <script>
+                        alert("Erro: <?php echo $user->msgErro; ?>");
+                        // Aguardar o alerta ser fechado e depois redirecionar
+                        setTimeout(function() {
+                        window.location.href = "Login.html"; // Altere para a URL desejada
+                        }, 1000); // Aguarda 1 segundo antes de redirecionar
+                    </script>
                     <?php
-                    // header('location:Login.html');
                 } 
                 else {
                     ?>

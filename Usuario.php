@@ -8,7 +8,7 @@ class Usuario
         try {
             include "conexao.php";
             //verificar se já esta cadastrado
-            $Comando=$conexao->prepare("SELECT ID_CLIENTE FROM TB_CLIENTE WHERE EMAIL_CLIENTE = ?");
+            $Comando=$conexao->prepare("SELECT ID_CLIENTE FROM TB_CLIENTE WHERE EMAIL_CLIENTE=?");
             $Comando->bindParam("1", $EmailCadastro);
             $Comando->execute();
 
@@ -35,15 +35,15 @@ class Usuario
         }
     }
 
-    public function logar($EmailLogin, $SenhaLogin)
+    public function logar($emailLogin, $senhaLogin)
     {
         try {
             include "conexao.php";
             //verificar se o email e senha estão cadastrados, se sim
             $Comando=$conexao->prepare("SELECT ID_CLIENTE FROM TB_CLIENTE 
-                                        WHERE EMAIL_CLIENTE = ? AND SENHA_CLIENTE = ?");
-            $Comando->bindParam("1", $EmailLogin);
-            $Comando->bindParam("2", $SenhaLogin);
+                                        WHERE EMAIL_CLIENTE=? AND SENHA_CLIENTE=?");
+            $Comando->bindParam("1", $emailLogin);
+            $Comando->bindParam("2", $senhaLogin);
             $Comando->execute();
 
             if($Comando->rowCount() > 0)
@@ -52,7 +52,7 @@ class Usuario
                 $dado = $Comando->fetch(); //fetch pega o que vem do bd e transforma em vetor
                 session_start();
                 $_SESSION['user_id'] = $dado['ID_CLIENTE'];
-                $_SESSION['user_email'] = $EmailLogin;
+                $_SESSION['user_email'] = $emailLogin;
 
                 return true; 
             }
