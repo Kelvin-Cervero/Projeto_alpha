@@ -13,23 +13,17 @@ session_start(); //
 
 
 
-echo "Nome:" . $_SESSION['nome_usuario'];
-echo "Endereço:" . $_SESSION['endereco_usuario'];
-echo "Forma de pagamento:" . $_SESSION['forma_pgto'];
-echo "Condição de pagamento:" . $_SESSION['cond_pagto'];
-echo "Valor da parcela:" . $_SESSION['valor_parce'];
-echo "Valor total:" . $_SESSION['valor_total'];
+echo "Nome:" . $_SESSION['nome_usuario'] . "<br>" . "<br>" ;
+echo "Endereço:" . $_SESSION['endereco_usuario'] . "<br>" . "<br>"  ;
+echo "Forma de pagamento:" . $_SESSION['forma_pgto'] . "<br>" . "<br>"  ;
+echo "Condição de pagamento:" . $_SESSION['cond_pgto'] . "<br>" . "<br>"  ;
+echo "Valor da parcela:" . $_SESSION['valor_parce'] . "<br>" . "<br>"  ;
+echo "Valor total:" . $_SESSION['valor_total'] . "<br>" . "<br>"  ;
 
 
 ?>
-
-session_destroy();
-
-
 
 <a href="gerenciarrrr.php"><input type="button" value="Gerenciar"></a>
 
 </body>
 </html>
-
-
