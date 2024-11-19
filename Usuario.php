@@ -8,14 +8,16 @@ class Usuario
         try {
             include "conexao.php";
             //verificar se já esta cadastrado
-            $Comando=$conexao->prepare("SELECT ID_CLIENTE FROM TB_CLIENTE WHERE EMAIL_CLIENTE=?");
+            $Comando=$conexao->prepare("SELECT * FROM TB_CLIENTE WHERE EMAIL_CLIENTE=?");
             $Comando->bindParam("1", $EmailCadastro);
             $Comando->execute();
+            $resultado = $Comando->rowCount();
 
             //veficar se já esta cadastrado, contando as linhas
-            if($Comando->rowCount() > 0)
+            if($resultado > "0")
             {
-                return false; //já esta cadastrado
+                $this->msgErro = "Email já cadastrado!";
+                return false; 
             }
             else
             {
@@ -31,7 +33,7 @@ class Usuario
             }
         }
         catch (Exception $erro) {
-            $msgErro = $erro->getMessage();
+            $this->$msgErro = $erro->getMessage();
         }
     }
 
@@ -45,6 +47,7 @@ class Usuario
             $Comando->bindParam("1", $emailLogin);
             $Comando->bindParam("2", $senhaLogin);
             $Comando->execute();
+            
 
             if($Comando->rowCount() > 0)
             {
@@ -62,7 +65,7 @@ class Usuario
             }
         }
         catch (Exception $erro) {
-            $msgErro = $erro->getMessage();
+            $this->$msgErro = $erro->getMessage();
         }
     }
 
