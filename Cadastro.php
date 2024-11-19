@@ -25,7 +25,7 @@ if (isset($_POST['incluir'])) {
 
             // Verifica se senha e confirmar senha são identicos
             if ($SenhaCadastro == $senhaConfirma) {
-                if ($user->cadastrar($NomeCadastro, $EnderecoCadastro, $EmailCadastro, $SenhaCadastro)) {
+                if ($user->cadastrar($NomeCadastro, $EnderecoCadastro, $EmailCadastro, $SenhaCadastro) === false) {
                     ?>
                     <script>
                         alert("Erro: <?php echo $user->msgErro; ?>");
